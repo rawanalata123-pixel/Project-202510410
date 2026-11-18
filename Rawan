@@ -1,0 +1,115 @@
+package com.mycompany.smartrestaurantorder;
+
+import java.util.Scanner;
+
+public class SmartRestaurantOrder {
+
+    public static void main(String[] args) {
+
+        Scanner input = new Scanner(System.in);
+
+        // Constants
+        final double DRINK_PRICE = 15.50;
+
+        // Variables
+        String name;
+        int age;
+        double mealPrice;
+        int drinks;
+        boolean isStudent;
+        int rating;
+
+        double drinksCost;
+        double subtotal;
+        double discountRate = 0;
+        double discountAmount;
+        double tipAmount = 0;
+        double finalBill;
+        int wholeBill;
+
+        // Input
+        System.out.print("Enter customer name: ");
+        name = input.nextLine();
+
+        System.out.print("Enter customer age: ");
+        age = input.nextInt();
+
+        System.out.print("Enter meal price: ");
+        mealPrice = input.nextDouble();
+
+        System.out.print("Enter number of drinks: ");
+        drinks = input.nextInt();
+
+        System.out.print("Are you a student? (true/false): ");
+        isStudent = input.nextBoolean();
+
+        System.out.print("Enter service rating (1-5): ");
+        rating = input.nextInt();
+
+        // Drinks calculation
+        drinksCost = drinks * DRINK_PRICE;
+
+        // Subtotal
+        subtotal = mealPrice + drinksCost;
+
+        // Discount calculation
+        if (isStudent) {
+            discountRate = 0.10;
+        }
+        else if (age >= 60) {
+            discountRate = 0.05;
+        }
+        else {
+            discountRate = 0;
+        }
+
+        discountAmount = subtotal * discountRate;
+
+        // Check service rating
+        if (rating < 1 || rating > 5) {
+            System.out.println("Error: Invalid service rating!");
+        }
+        else {
+
+            // Calculate bill after discount
+            double afterDiscount = subtotal - discountAmount;
+
+            // Tip calculation
+            if (rating == 4 || rating == 5) {
+                tipAmount = afterDiscount * 0.10;
+            }
+            else {
+                tipAmount = 0;
+            }
+
+            // Final bill
+            finalBill = afterDiscount + tipAmount;
+
+            // Type casting
+            wholeBill = (int) finalBill;
+
+            // Receipt
+            System.out.println("\n===== SMART RESTAURANT =====");
+
+            System.out.println("Customer: " + name);
+
+            System.out.printf("Meal: $%.2f%n", mealPrice);
+
+            System.out.printf("Drinks: $%.2f%n", drinksCost);
+
+            System.out.printf("Subtotal: $%.2f%n", subtotal);
+
+            System.out.printf("Discount: $%.2f%n", discountAmount);
+
+            System.out.printf("Tip: $%.2f%n", tipAmount);
+
+            System.out.printf("Final bill: $%.2f%n", finalBill);
+
+            System.out.println("Whole amount: $" + wholeBill);
+
+            System.out.println("============================");
+        }
+
+        input.close();
+    }
+}
